@@ -71,8 +71,11 @@ exports.decrypt = function(ciphertext, key, table) {
 	ciphertext = util.prettify(ciphertext, '');
 
 	var rowsize = Math.ceil(ciphertext.length / keysize.length);
-	for(var i = 0; i < key.length; i++) {
-		
+	var sortedkey = key.slice().sort();
+	for(var i = 0; i < rowsize; i++) {
+		for(var e = 0; e < key.length; e++) {
+			rowsize * sortedkey.indexOf(key[e]);
+		}
 	}
 };
 
