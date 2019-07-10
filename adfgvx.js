@@ -1,4 +1,4 @@
-var exports = module.exports = {};
+const util = require("./util.js");
 
 exports.explain = function() {
 	console.log("Hello! This is the adfgvx cipher simulator created by ensj.\n\
@@ -39,20 +39,51 @@ exports.generateTable = function() {
 
 exports.encrypt = function(plaintext, key, table) {
 	var coords = ['A', 'D', 'F', 'G', 'V', 'X'];
-	plaintext = plaintext.prettify();
+	plaintext = util.prettify(plaintext, '');
+	key = util.prettify(key, '').split("");
+	var ciphertext = [];
+	var subtext = [];
 
+	// push substituted characters into ciphertext.
 	for(var i = 0; i < plaintext.length; i++) {
-
+		let letter = {row: Math.floor(table.indexOf(plaintext[i])/6), 
+					  column: table.indexOf(plaintext[i])%6};
+		subtext.push(coords[letter.row]);
+		subtext.push(coords[letter.column]);
 	}
+
+	var sortedkey = key.slice().sort();
+	// transposition
+	for(var i = 0; i < key.length; i++) {
+		let pos = key.indexOf(sortedkey[i]);
+		let line = 0;
+		for(var e = pos; e < subtext.length; e = (line * 7 + pos)) {
+			ciphertext.push(subtext[e]);
+			line++;
+		}
+	}
+
+	return ciphertext.join("");
 };
 
 exports.decrypt = function(ciphertext, key, table) {
 	var coords = ['A', 'D', 'F', 'G', 'V', 'X'];
-	ciphertext = ciphertext.prettify();
+	ciphertext = util.prettify(ciphertext, '');
 
+	var rowsize = Math.ceil(ciphertext.length / keysize.length);
+	for(var i = 0; i < key.length; i++) {
+		
+	}
 };
 
-// for adfgvx prettification purposes.
-/*String.prototype.prettify = function() {
-	return this.toUpperCase().replace(/\s/g, '');
-}*/
+exports.printTable = function(table) {
+	// print the table
+	console.log("Table:");
+	for(var i = 0; i < 6; i++) {
+		let sentence = "";
+		for(var e = i*6; e < i*6+6; e++) {
+			sentence = sentence.concat(table[e] + " ");
+		}
+		console.log(sentence);
+	}
+}

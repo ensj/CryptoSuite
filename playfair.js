@@ -1,4 +1,4 @@
-var exports = module.exports = {};
+const util = require("./util.js");
 
 exports.explain = function() {
 	console.log("Hello! This is the playfair cipher simulator created by ensj.\n\
@@ -70,7 +70,7 @@ exports.encrypt = function(plaintext, table) {
 		}
 	}
 
-	return ciphertext;
+	return ciphertext.join("");
 }
 
 // decrypts the ciphertext.
@@ -100,7 +100,7 @@ exports.decrypt = function(ciphertext, table) {
 		}
 	}
 
-	return plaintext;
+	return plaintext.join("");
 }
 
 // prints out a 5x5 table.
@@ -120,7 +120,7 @@ exports.printTable = function(table) {
 keyVerify = function(key) {
 	// prettifies the key into something easier to handle
 	// splits key into array
-	key = key.prettify().split("");
+	key = util.prettify(key, "p").split("");
 
 	// get rid of duplicate letters in the key
 	for(var i = 0; i < key.length-1; i++) {
@@ -140,7 +140,7 @@ keyVerify = function(key) {
 
 // puts any input into an array as digraphs
 digraphify = function(data) {
-	data = data.prettify();
+	data = util.prettify(data, "p");
 
 	var digraphs = [];
 	for(var i = 0; i < data.length; i+=2) {
@@ -167,8 +167,3 @@ modulus = function(b, n) {
 	}
 	return b;
 };
-
-// turns any string into uppercase letters, replacing all instances of I & J as IJ. Also gets rid of spaces.
-String.prototype.prettify = function() {
-	return this.toUpperCase().replace(/[IJ]/g, 'Ĳ').replace(/\s/g, '');
-}

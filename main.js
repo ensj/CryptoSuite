@@ -10,36 +10,31 @@ const adfgvx   = require("./adfgvx.js");
 //const dsa
 //const ecdsa
 
-var key = 'palmerstone';
+var key = "palmerstone";
 var plaintext = "balloon";
 
-function playfairDemo(key, plaintext) {
+function playfairDemo(key, plaintext) { // prof. schaefer. key: palmerston, plaintext: balloon
 	playfair.explain(); 
 	console.log("Key:", key);
 	var table = playfair.generateTable(key);
 	console.log("\nPlaintext message: " + plaintext)
 	var ciphertext = playfair.encrypt(plaintext, table);
-
-	var sentence = "";
-	for(var i = 0; i < ciphertext.length; i++) {
-		sentence += ciphertext[i] + " ";
-	}
-	console.log("Ciphertext: " + sentence);
-	plaintext = playfair.decrypt(ciphertext.join(""), table);
-	sentence = "";
-	for(var i = 0; i < plaintext.length; i++) {
-		sentence += plaintext[i] + " ";
-	}
-	console.log("Plaintext: " + sentence);
+	console.log("Ciphertext: " + ciphertext);
+	plaintext = playfair.decrypt(ciphertext, table);
+	console.log("Plaintext: " + plaintext);
 }
 
 function adfgvxDemo(key, plaintext) {
 	adfgvx.explain();
 	console.log("Key:", key);
-	var table = adfgvx.generateTable();
+	var table = adfgvx.generateTable(); // generate a custom table.
+	//var table = 'KZWR1F9B6CL5Q7JPGXEVY3AN8ODH02U4ISTM'.split(""); // prof. schaefer's table. key: deutsch, plaintext: product ciphers
+	//var table = 'NA1C3H8TB2OME5WRPD4F6G7I9J0KLQSUVXYZ'.split(""); // wikipedia's table. key: privacy, plaintext: attack at 1200am
+	//adfgvx.printTable(table);
 	console.log("\nPlaintext message: " + plaintext);
-	var ciphertext = playfair.encrypt(plaintext, key, table);
+	var ciphertext = adfgvx.encrypt(plaintext, key, table);
+	console.log("Ciphertext: " + ciphertext);
 }
 
 playfairDemo(key, plaintext);
-//adfgvx.generateTable();
+//adfgvxDemo(key, plaintext);
