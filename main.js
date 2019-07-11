@@ -39,8 +39,8 @@ function playfairDemo(key, plaintext) { // prof. schaefer. key: palmerston, plai
 function adfgvxDemo(key, plaintext) {
 	adfgvx.explain();
 	console.log("Key:", key);
-	var table = adfgvx.generateTable(); // generate a custom table.
-	//var table = 'KZWR1F9B6CL5Q7JPGXEVY3AN8ODH02U4ISTM'.split(""); // prof. schaefer's table. key: deutsch, plaintext: product ciphers
+	//var table = adfgvx.generateTable(); // generate a custom table.
+	var table = 'KZWR1F9B6CL5Q7JPGXEVY3AN8ODH02U4ISTM'.split(""); // prof. schaefer's table. key: deutsch, plaintext: product ciphers
 	//var table = 'NA1C3H8TB2OME5WRPD4F6G7I9J0KLQSUVXYZ'.split(""); // wikipedia's table. key: privacy, plaintext: attack at 1200am
 	//adfgvx.printTable(table);
 	console.log("\nPlaintext message:", plaintext);
