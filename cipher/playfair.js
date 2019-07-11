@@ -1,4 +1,4 @@
-const util = require("./util.js");
+const util = require("../util.js");
 
 exports.explain = function() {
 	console.log("Hello! This is the playfair cipher simulator created by ensj.\n\

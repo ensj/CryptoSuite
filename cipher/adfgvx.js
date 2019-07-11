@@ -1,8 +1,8 @@
-const util = require("./util.js");
+const util = require("../util.js");
 
 exports.explain = function() {
 	console.log("Hello! This is the adfgvx cipher simulator created by ensj.\n\
-In this cipher, I and J are interchangeable, and X is used as the padding.\n");
+In this cipher, the table gets randomly generated unless you set up your own.\n");
 };
 
 exports.generateTable = function() {
@@ -39,8 +39,8 @@ exports.generateTable = function() {
 
 exports.encrypt = function(plaintext, key, table) {
 	var coords = ['A', 'D', 'F', 'G', 'V', 'X'];
-	plaintext = util.prettify(plaintext, '');
-	key = util.prettify(key, '').split("");
+	plaintext = util.prettify(plaintext, 'a');
+	key = util.prettify(key, 'a').split("");
 	var ciphertext = [];
 	var subtext = [];
 
@@ -51,7 +51,6 @@ exports.encrypt = function(plaintext, key, table) {
 		subtext.push(coords[letter.row]);
 		subtext.push(coords[letter.column]);
 	}
-	console.log(subtext);
 
 	var sortedkey = key.slice().sort();
 	// transposition
@@ -69,22 +68,33 @@ exports.encrypt = function(plaintext, key, table) {
 
 exports.decrypt = function(ciphertext, key, table) {
 	var coords = ['A', 'D', 'F', 'G', 'V', 'X'];
-	ciphertext = util.prettify(ciphertext, '');
+	ciphertext = util.prettify(ciphertext, 'a');
 	var plaintext = [];
+	var subtext = [];
 
 	var rowsize = Math.ceil(ciphertext.length / key.length);
 	var sortedkey = key.split("").sort();
 	for(var i = 0; i < rowsize; i++) {
 		for(var e = 0; e < key.length; e++) {
+			// row # + row size * sorted index of key element we're on
 			let ind = i + rowsize * sortedkey.indexOf(key[e]);
-			if(ind >= table.length) {
+			if(ind >= ciphertext.length) {
 				break;
 			}
-			plaintext.push(ciphertext[ind]);
+			subtext.push(ciphertext[ind]);
  		}
 	}
 
-	console.log(plaintext);
+	while(subtext.length > 0) {
+		let row = coords.indexOf(subtext[0]);
+		subtext.shift();
+		let col = coords.indexOf(subtext[0]);
+		subtext.shift();
+		let ind = 6 * row + col;
+		plaintext.push(table[ind]);
+	}
+
+	return plaintext.join("");
 };
 
 exports.printTable = function(table) {
