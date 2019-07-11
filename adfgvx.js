@@ -51,6 +51,7 @@ exports.encrypt = function(plaintext, key, table) {
 		subtext.push(coords[letter.row]);
 		subtext.push(coords[letter.column]);
 	}
+	console.log(subtext);
 
 	var sortedkey = key.slice().sort();
 	// transposition
@@ -69,14 +70,21 @@ exports.encrypt = function(plaintext, key, table) {
 exports.decrypt = function(ciphertext, key, table) {
 	var coords = ['A', 'D', 'F', 'G', 'V', 'X'];
 	ciphertext = util.prettify(ciphertext, '');
+	var plaintext = [];
 
-	var rowsize = Math.ceil(ciphertext.length / keysize.length);
-	var sortedkey = key.slice().sort();
+	var rowsize = Math.ceil(ciphertext.length / key.length);
+	var sortedkey = key.split("").sort();
 	for(var i = 0; i < rowsize; i++) {
 		for(var e = 0; e < key.length; e++) {
-			rowsize * sortedkey.indexOf(key[e]);
-		}
+			let ind = i + rowsize * sortedkey.indexOf(key[e]);
+			if(ind >= table.length) {
+				break;
+			}
+			plaintext.push(ciphertext[ind]);
+ 		}
 	}
+
+	console.log(plaintext);
 };
 
 exports.printTable = function(table) {

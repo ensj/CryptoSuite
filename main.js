@@ -10,7 +10,7 @@ const adfgvx   = require("./adfgvx.js");
 //const dsa
 //const ecdsa
 
-var key = "palmerstone";
+var key = "palmerston";
 var plaintext = "balloon";
 
 function playfairDemo(key, plaintext) { // prof. schaefer. key: palmerston, plaintext: balloon
@@ -34,7 +34,9 @@ function adfgvxDemo(key, plaintext) {
 	console.log("\nPlaintext message: " + plaintext);
 	var ciphertext = adfgvx.encrypt(plaintext, key, table);
 	console.log("Ciphertext: " + ciphertext);
+	plaintext = adfgvx.decrypt(ciphertext, key, table);
+	console.log("Plaintext: " + plaintext);
 }
 
-playfairDemo(key, plaintext);
-//adfgvxDemo(key, plaintext);
+//playfairDemo(key, plaintext);
+adfgvxDemo(key, plaintext);
