@@ -56,7 +56,7 @@ exports.encrypt = function(plaintext, key, table) {
 	for(var i = 0; i < key.length; i++) {
 		let pos = key.indexOf(sortedkey[i]);
 		let line = 0;
-		for(var e = pos; e < subtext.length; e = (line * 7 + pos)) {
+		for(var e = pos; e < subtext.length; e = (line * key.length + pos)) {
 			ciphertext.push(subtext[e]);
 			line++;
 		}
@@ -71,10 +71,8 @@ exports.decrypt = function(ciphertext, key, table) {
 	var plaintext = [];
 	var subtext = [];
 
-	//PROBLEM
 	var rowsize = Math.ceil(ciphertext.length / key.length);
 	var sortedkey = key.slice().sort();
-	//?!??!??!???
 	for(var i = 0; i < rowsize; i++) {
 		for(var e = 0; e < key.length; e++) {
 			// row # + row size * sorted index of key element we're on
@@ -85,8 +83,6 @@ exports.decrypt = function(ciphertext, key, table) {
 			subtext.push(ciphertext[ind]);
  		}
 	}
-
-	console.log(ciphertext.length + " " + subtext.length)
 
 	// Translates ciphertext back to plaintext by matching according to coords on table
 	while(subtext.length > 0) {

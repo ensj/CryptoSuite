@@ -13,7 +13,7 @@ const adfgvx   = require("./cipher/adfgvx.js");
 //const ecdsa
 
 var key = "paradigm";
-var plaintext = "Japanese is a difficult language 13.";
+var plaintext = "abcdefghijklmnopqrstuvwxyz123"; //29
 
 function scytaleDemo(key, plaintext) {
 	scytale.explain();
