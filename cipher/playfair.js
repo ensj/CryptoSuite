@@ -12,8 +12,6 @@ exports.generateTable = function(key) {
 				 'L', 'M', 'N', 'O', 'P', 
 				 'Q', 'R', 'S', 'T', 'U', 
 				 'V', 'W', 'X', 'Y', 'Z', ];
-	// check if key is usable. If not, create one based on input
-	key = keyVerify(key);
 	
 	var keycount = 0;
 	// scrolls through the key characters in reverse order.
@@ -65,8 +63,8 @@ exports.encrypt = function(plaintext, table) {
 			ciphertext[i] += table[((letter_2.row+1)%5 * 5) + letter_2.column];
 		}else {
 			// else do the standard coordinate matching method.
-			ciphertext[i] = table[letter_1.row * 5 + letter_2.column];
-			ciphertext[i] += table[letter_2.row * 5 + letter_1.column];
+			ciphertext[i] = table[letter_2.row * 5 + letter_1.column];
+			ciphertext[i] += table[letter_1.row * 5 + letter_2.column];
 		}
 	}
 
@@ -95,8 +93,8 @@ exports.decrypt = function(ciphertext, table) {
 			plaintext[i] += table[modulus(letter_2.row-1, 5) * 5 + letter_2.column];
 		}else {
 			// else do the standard coordinate matching method.
-			plaintext[i] = table[letter_1.row * 5 + letter_2.column];
-			plaintext[i] += table[letter_2.row * 5 + letter_1.column];
+			plaintext[i] = table[letter_2.row * 5 + letter_1.column];
+			plaintext[i] += table[letter_1.row * 5 + letter_2.column];
 		}
 	}
 
@@ -115,28 +113,6 @@ exports.printTable = function(table) {
 		console.log(sentence);
 	}
 }
-
-// Checks if key is valid, and creates a valid one if it is not
-keyVerify = function(key) {
-	// prettifies the key into something easier to handle
-	// splits key into array
-	key = util.prettify(key, "p").split("");
-
-	// get rid of duplicate letters in the key
-	for(var i = 0; i < key.length-1; i++) {
-		for(var e = i+1; e < key.length; e++) {
-			if(key[i] == key[e]) {
-				key.splice(e, 1);
-				i--; e--;
-			}
-		}
-	}
-
-	// print the key
-	console.log("Generated key: " + key);
-
-	return key;
-};
 
 // puts any input into an array as digraphs
 digraphify = function(data) {

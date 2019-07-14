@@ -40,7 +40,6 @@ exports.generateTable = function() {
 exports.encrypt = function(plaintext, key, table) {
 	var coords = ['A', 'D', 'F', 'G', 'V', 'X'];
 	plaintext = util.prettify(plaintext, 'a');
-	key = util.prettify(key, 'a').split("");
 	var ciphertext = [];
 	var subtext = [];
 
@@ -72,8 +71,10 @@ exports.decrypt = function(ciphertext, key, table) {
 	var plaintext = [];
 	var subtext = [];
 
+	//PROBLEM
 	var rowsize = Math.ceil(ciphertext.length / key.length);
-	var sortedkey = key.split("").sort();
+	var sortedkey = key.slice().sort();
+	//?!??!??!???
 	for(var i = 0; i < rowsize; i++) {
 		for(var e = 0; e < key.length; e++) {
 			// row # + row size * sorted index of key element we're on
@@ -85,6 +86,9 @@ exports.decrypt = function(ciphertext, key, table) {
  		}
 	}
 
+	console.log(ciphertext.length + " " + subtext.length)
+
+	// Translates ciphertext back to plaintext by matching according to coords on table
 	while(subtext.length > 0) {
 		let row = coords.indexOf(subtext[0]);
 		subtext.shift();
