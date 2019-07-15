@@ -3,6 +3,7 @@ const util = require("./util.js");
 const scytale = require("./cipher/scytale.js");
 const playfair = require("./cipher/playfair.js");
 const adfgvx   = require("./cipher/adfgvx.js");
+//const streamcipher = 
 //const rbg
 //const affine
 //const rsa
